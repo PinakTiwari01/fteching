@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+
+     
+</head>
+<body>
+    <div>
+        <input type="text" placeholder="search" id="sin">
+        <button id="sbtn">submit</button>
+    </div>
+
+    <div id="result">
+
+        <!--scripting -->
+
+
+    </div>
+
+  
+
+    <script>
+
+        const sinput = document.querySelector("#sin")
+
+        const sbtn = document.querySelector("#sbtn")
+
+        const main = document.querySelector("#result")
+
+
+        //fetching to get recipe step 2
+        const FR = async (query)=>{
+
+            const data = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
+            const response = await data.json();
+            //console.log(response); // check what we get and console.log(response.meals[0]) for 0 index
+            response.meals.forEach(meal => { // step 4 
+                // main display
+                const disdiv = document.createElement('div')//create div
+                disdiv.classList.add('recipe');
+                disdiv.innerHTML = `
+                    <img src="${meal.strMealThumb} ">
+                    <h3>${meal.strMeal}</h3>
+                    <p>${meal.strArea}</p>
+                    <p>${meal.strCategory}</p>
+                `
+                // step 5 add to see recepie 
+                const btn = document.createElement('button');
+                btn.textContent = "View Recipe" ;
+                disdiv.appendChild(btn);
+
+                main.appendChild(disdiv);
+
+
+            });
+
+
+        } 
+
+        // search button 
+        sbtn.addEventListener("click", ()=>{
+            
+            //console.log("button") // checking js is working or not step 1
+            const SI = sinput.value.trim(); // step 3 for taking value
+            FR(SI);
+        })
+
+    </script>
+
+</body>
+</html>
+
+
